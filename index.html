@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pinge (Charles) Chen</title>
+  <meta name="description" content="Pinge (Charles) Chen: MS in Business Analytics at Columbia University. Analytics, product management, and finance.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D4F91'/%3E%3Ctext x='32' y='42' font-family='Segoe UI,Arial,sans-serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23B9D9EB'%3EPC%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --columbia: #B9D9EB;
+      --columbia-tint: #E8F3FA;
+      --blue: #1D4F91;
+      --navy: #0B2D52;
+      /* Fixed brand pair (same in both themes) */
+      --brand: #1D4F91;
+      --brand-ink: #B9D9EB;
+      --on-brand: #FFFFFF;
+      --bg: #F6F9FC;
+      --surface: #FFFFFF;
+      --ink: #1E2A36;
+      --muted: #4F5F70;
+      --line: #D6E4EE;
+      --shadow: 0 1px 2px rgba(11, 45, 82, .06), 0 6px 20px rgba(11, 45, 82, .06);
+      --radius: 16px;
+      --nav-h: 60px;
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        /* Dark theme reuses the same palette tokens */
+        --columbia: #B9D9EB;
+        --columbia-tint: color-mix(in srgb, #1D4F91 35%, #0B1622);
+        --blue: #B9D9EB;
+        --navy: #E8F3FA;
+        --bg: #0B1622;
+        --surface: #112233;
+        --ink: #DCE7F0;
+        --muted: #9DB2C5;
+        --line: #22394F;
+        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--blue); text-underline-offset: 3px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--columbia); outline-offset: 2px; border-radius: 6px; }
+    h1, h2, h3 { color: var(--navy); line-height: 1.25; margin: 0; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+    .skip { position: absolute; left: -999px; top: 8px; background: var(--surface); padding: 8px 12px; border-radius: 8px; z-index: 100; }
+    .skip:focus { left: 8px; }
+
+    /* ---------- Nav ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      height: var(--nav-h);
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      backdrop-filter: saturate(160%) blur(10px);
+      -webkit-backdrop-filter: saturate(160%) blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav .wrap { height: 100%; display: flex; align-items: center; gap: 16px; }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700; color: var(--navy); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+    }
+    .brand-mark {
+      width: 32px; height: 32px; border-radius: 9px;
+      display: grid; place-items: center;
+      background: var(--brand); color: var(--brand-ink); font-size: 13px; letter-spacing: .5px;
+    }
+    .nav-links {
+      display: flex; gap: 4px; margin-left: auto;
+      overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      padding: 7px 12px; border-radius: 999px;
+      color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 500; white-space: nowrap;
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover { color: var(--navy); background: var(--columbia-tint); }
+    .nav-links a.active { color: var(--navy); background: var(--columbia-tint); box-shadow: inset 0 0 0 1px var(--columbia); }
+    @media (max-width: 640px) {
+      .brand-name { display: none; }
+      .nav-links a { padding: 7px 10px; font-size: 14px; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 56px 0 28px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; color: var(--blue);
+      background: var(--columbia-tint); border: 1px solid var(--columbia);
+      padding: 4px 12px; border-radius: 999px;
+    }
+    .hero h1 { font-size: clamp(2rem, 5.5vw, 3.2rem); margin: 16px 0 10px; letter-spacing: -.02em; }
+    .hero .lede { font-size: clamp(1.05rem, 2.2vw, 1.2rem); color: var(--muted); max-width: 640px; margin: 0 0 22px; }
+    .contact { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 999px; font-weight: 600; font-size: 15px;
+      text-decoration: none; border: 1px solid var(--line); background: var(--surface); color: var(--navy);
+      transition: border-color .2s, transform .2s;
+    }
+    .btn:hover { border-color: var(--columbia); transform: translateY(-1px); }
+    .btn.primary { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+    .btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+
+    /* ---------- Jump tiles ---------- */
+    .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 36px 0 8px; padding: 0; list-style: none; }
+    .tiles li { display: flex; }
+    .tiles li > .tile { flex: 1; }
+    @media (max-width: 860px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 420px) { .tiles { grid-template-columns: 1fr; } }
+    .tile {
+      display: block; text-decoration: none; color: inherit;
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 18px; box-shadow: var(--shadow);
+      transition: transform .2s, border-color .2s;
+      position: relative; overflow: hidden;
+    }
+    .tile::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--columbia); }
+    .tile:hover { transform: translateY(-3px); border-color: var(--columbia); }
+    .tile .num { font-size: 13px; font-weight: 700; color: var(--blue); letter-spacing: .08em; }
+    .tile .tile-title { display: block; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin: 6px 0 4px; line-height: 1.25; }
+    .tile p { margin: 0; font-size: 14px; color: var(--muted); }
+    .tile .go { position: absolute; right: 16px; top: 16px; color: var(--blue); opacity: .6; transition: transform .2s, opacity .2s; }
+    .tile:hover .go { transform: translateX(3px); opacity: 1; }
+
+    /* ---------- Sections ---------- */
+    section.block { padding: 44px 0 8px; }
+    .section-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+    .section-head .num { font-weight: 700; color: var(--blue); font-size: 14px; letter-spacing: .08em; }
+    .section-head h2 { font-size: clamp(1.4rem, 3vw, 1.75rem); letter-spacing: -.01em; }
+    .section-head::after { content: ""; flex: 1; height: 1px; background: var(--line); align-self: center; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 22px; box-shadow: var(--shadow);
+    }
+    .stack { display: grid; gap: 14px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .card-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; }
+    .card h3 { font-size: 1.12rem; }
+    .org-tag { font-weight: 500; color: var(--muted); font-size: .95rem; }
+    .meta { color: var(--muted); font-size: 14px; white-space: nowrap; }
+    .role-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin-top: 4px; }
+    .role { font-weight: 600; color: var(--blue); }
+    .card ul { margin: 14px 0 0; padding-left: 20px; }
+    .card li { margin: 0 0 8px; }
+    .card li:last-child { margin-bottom: 0; }
+    .card li::marker { color: var(--blue); }
+
+    .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .pill {
+      display: inline-block; font-size: 13.5px; font-weight: 600;
+      padding: 4px 11px; border-radius: 999px;
+      background: var(--columbia-tint); color: var(--navy); border: 1px solid var(--columbia);
+    }
+    .coursework { margin: 12px 0 0; font-size: 15px; }
+    .coursework strong { color: var(--navy); }
+
+    /* Experience timeline */
+    .timeline { position: relative; display: grid; gap: 14px; padding-left: 22px; }
+    .timeline::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--columbia); border-radius: 2px; }
+    .timeline .card { position: relative; }
+    .timeline .card::before {
+      content: ""; position: absolute; left: -22px; top: 26px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--surface); border: 3px solid var(--brand);
+    }
+    .highlights { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+    /* Skills */
+    .skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    @media (max-width: 760px) { .skills { grid-template-columns: 1fr; } }
+    .skill h3 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+    .skill h3 .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--columbia); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .chip {
+      font-size: 14px; padding: 5px 11px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+    }
+    .skill.wide { grid-column: 1 / -1; }
+
+    /* Footer */
+    footer { margin-top: 56px; border-top: 1px solid var(--line); background: var(--surface); }
+    footer .wrap { padding-top: 28px; padding-bottom: 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+    footer p { margin: 0; color: var(--muted); font-size: 14px; }
+    .to-top { font-size: 14px; font-weight: 600; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="Pinge (Charles) Chen, back to top">
+        <span class="brand-mark" aria-hidden="true">PC</span>
+        <span class="brand-name">Charles Chen</span>
+      </a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <div class="wrap hero" id="top">
+      <span class="eyebrow">MS in Business Analytics · Columbia University</span>
+      <h1>Hi, I'm Pinge (Charles) Chen.</h1>
+      <p class="lede">Business Analytics grad student at Columbia, with internships in AI services, financial services, and retail/consumer goods.</p>
+      <div class="contact">
+        <a class="btn primary" href="mailto:pc3191@columbia.edu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          pc3191@columbia.edu
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/pchen13" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm7 0h3.8v1.6h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.75V21h-4v-5.1c0-1.22-.02-2.78-1.8-2.78-1.8 0-2.08 1.33-2.08 2.7V21H10V9.75Z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn" href="https://github.com/CharlesC13" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+          GitHub
+        </a>
+      </div>
+
+      <!-- Jump tiles -->
+      <nav aria-label="Jump to section">
+        <ul class="tiles">
+          <li><a class="tile" href="#education">
+            <span class="num">01</span><span class="go" aria-hidden="true">→</span>
+            <span class="tile-title">Education</span>
+            <p>Columbia MSBA · UC Irvine BA</p>
+          </a></li>
+          <li><a class="tile" href="#experience">
+            <span class="num">02</span><span class="go" aria-hidden="true">→</span>
+            <span class="tile-title">Experience</span>
+            <p>XMax · CITIC Securities · POP MART</p>
+          </a></li>
+          <li><a class="tile" href="#projects">
+            <span class="num">03</span><span class="go" aria-hidden="true">→</span>
+            <span class="tile-title">Projects</span>
+            <p>Sam's Club discovery · Churn model</p>
+          </a></li>
+          <li><a class="tile" href="#skills">
+            <span class="num">04</span><span class="go" aria-hidden="true">→</span>
+            <span class="tile-title">Skills &amp; Interests</span>
+            <p>Product · SQL &amp; Python · Snowflake</p>
+          </a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ================= EDUCATION ================= -->
+    <section class="block" id="education" aria-labelledby="h-education">
+      <div class="wrap">
+        <div class="section-head"><span class="num">01</span><h2 id="h-education">Education</h2></div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-top">
+              <h3>Columbia University</h3>
+              <span class="meta">New York, NY</span>
+            </div>
+            <div class="role-line">
+              <span class="role">MS in Business Analytics</span>
+              <span class="meta">Sep 2025 – Dec 2026</span>
+            </div>
+            <div class="facts"><span class="pill">GPA 3.82 / 4.00</span></div>
+            <p class="coursework"><strong>Coursework:</strong> Digital Product Management, Data &amp; Business Analytics, Analytics Engineering (Snowflake, dbt, Preset), Optimization</p>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <h3>University of California, Irvine</h3>
+              <span class="meta">Irvine, CA</span>
+            </div>
+            <div class="role-line">
+              <span class="role">BA in Business Economics, Minor in Management</span>
+              <span class="meta">Sep 2021 – Jun 2025</span>
+            </div>
+            <div class="facts"><span class="pill">GPA 3.95 / 4.00</span><span class="pill">Latin Honors (Top 4%)</span></div>
+            <p class="coursework"><strong>Coursework:</strong> Business Forecasting, Econometrics, Python Programming, Marketing, Corporate Finance, Accounting</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROFESSIONAL EXPERIENCES ================= -->
+    <section class="block" id="experience" aria-labelledby="h-experience">
+      <div class="wrap">
+        <div class="section-head"><span class="num">02</span><h2 id="h-experience">Professional Experiences</h2></div>
+        <div class="timeline">
+          <article class="card">
+            <div class="card-top">
+              <h3>XMax Inc. <span class="org-tag">(AI Services)</span></h3>
+              <span class="meta">New York, NY</span>
+            </div>
+            <div class="role-line">
+              <span class="role">Business Analyst Intern</span>
+              <span class="meta">Jun 2026 – Aug 2026</span>
+            </div>
+            <ul>
+              <li>Analyzed financial statements across legacy furniture and new B2B AI segments, tracking AI revenue share, client concentration, contract backlog, cash burn, and runway; delivered an executive scorecard that informed capital allocation decisions</li>
+              <li>Built a contract- and pipeline-based AI revenue forecast and cash runway model, using client renewal probabilities, deal conversion rates, and peer benchmarks to project funding needs 12 months ahead under base, upside, and downside scenarios</li>
+              <li>Developed sum-of-the-parts valuation and Monte Carlo simulation of client renewals and deal outcomes, valuing each segment against its industry peers and providing leadership valuation range for strategic planning</li>
+            </ul>
+            <div class="highlights"><span class="pill">12-month runway forecast</span><span class="pill">3 scenarios</span><span class="pill">Monte Carlo valuation</span></div>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <h3>CITIC Securities <span class="org-tag">(Financial Services)</span></h3>
+              <span class="meta">Shanghai, China</span>
+            </div>
+            <div class="role-line">
+              <span class="role">Sales Dept. Analyst Intern</span>
+              <span class="meta">Jun 2024 – Aug 2024</span>
+            </div>
+            <ul>
+              <li>Tracked sales of funds and wealth management products by product type, branch, and client segment; built weekly sales reports that highlighted top and underperforming products and helped managers adjust sales targets</li>
+              <li>Segmented clients by assets, risk tolerance, and trading activity to match them with suitable products; delivered target client lists for 4 product campaigns that improved advisor outreach efficiency</li>
+              <li>Identified inactive accounts and clients at risk of leaving using trading activity and asset trends; supported re-engagement campaigns that reactivated 12% of targeted dormant accounts</li>
+            </ul>
+            <div class="highlights"><span class="pill">12% dormant accounts reactivated</span><span class="pill">4 product campaigns</span></div>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <h3>POP MART <span class="org-tag">(Retail/Consumer Goods)</span></h3>
+              <span class="meta">Shanghai, China</span>
+            </div>
+            <div class="role-line">
+              <span class="role">Cross-Brand Collaboration Dept. Analyst Intern</span>
+              <span class="meta">Jul 2023 – Sep 2023</span>
+            </div>
+            <ul>
+              <li>Analyzed audience overlap, social media trends, and price positioning to match POP MART IPs with fashion brands, sizing expected sales and new customer reach; delivered a ranked shortlist of 4 partners that guided leadership's outreach priorities</li>
+              <li>Tracked post-launch results of fashion collaborations, including sell-through rate, revenue, resale prices, social engagement, and new vs. returning buyers; produced campaign reports showing 28% of collab buyers were new to POP MART and informed which partnerships to renew</li>
+              <li>Monitored the collaboration portfolio across IPs and partners to flag overexposed and underused IPs, and built data-backed pitch materials from past campaign results; recommended shifting future fashion collabs toward specific IP and strengthened POP MART's position in partner negotiations</li>
+            </ul>
+            <div class="highlights"><span class="pill">28% new-to-brand buyers</span><span class="pill">4-partner shortlist</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECT EXPERIENCES ================= -->
+    <section class="block" id="projects" aria-labelledby="h-projects">
+      <div class="wrap">
+        <div class="section-head"><span class="num">03</span><h2 id="h-projects">Project Experiences</h2></div>
+        <div class="stack">
+          <article class="card">
+            <div class="card-top">
+              <h3>Walmart / Sam's Club Product Management Project: New Product Discovery</h3>
+              <span class="meta">New York, NY</span>
+            </div>
+            <div class="role-line">
+              <span class="role">Product Manager Team</span>
+              <span class="meta">Sep 2026 – Present</span>
+            </div>
+            <ul>
+              <li>Partnered with Sam's Club to help members discover new products across the app, Scan &amp; Go, and in-club without slowing their weekly stock-up; interviewed 46 millennial parents, built persona and jobs-to-be-done, and found list-driven speed crowds out discovery; drafting MRD for digital and in-store solutions</li>
+            </ul>
+            <div class="highlights"><span class="pill">46 user interviews</span><span class="pill">Persona &amp; JTBD</span><span class="pill">MRD in progress</span></div>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <h3>Upper Crust Food Service Project: Customer Churn Prediction Model</h3>
+              <span class="meta">New York, NY</span>
+            </div>
+            <div class="role-line">
+              <span class="role">Analyst Team</span>
+              <span class="meta">Jun 2026 – Aug 2026</span>
+            </div>
+            <ul>
+              <li>Engineered behavioral and payment based features for a churn prediction model at Upper Crust Food Service, identifying and removing several leakage prone variables</li>
+              <li>Built and compared classification models predicting churn across 433 client accounts at Upper Crust Food Service, and showed that flagging the riskiest 30 percent of accounts would catch 54 percent of actual churn cases, guiding customer success team prioritization</li>
+            </ul>
+            <div class="highlights"><span class="pill">433 client accounts</span><span class="pill">Top 30% flagged → 54% of churn caught</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS & INTERESTS ================= -->
+    <section class="block" id="skills" aria-labelledby="h-skills">
+      <div class="wrap">
+        <div class="section-head"><span class="num">04</span><h2 id="h-skills">Skills &amp; Interests</h2></div>
+        <div class="skills">
+          <div class="card skill">
+            <h3><span class="dot" aria-hidden="true"></span>Product</h3>
+            <div class="chips">
+              <span class="chip">User interviews</span><span class="chip">Customer personas</span><span class="chip">Jobs-to-be-done</span><span class="chip">MRD/PRD writing</span><span class="chip">Customer segmentation</span><span class="chip">Needs assessment</span>
+            </div>
+          </div>
+          <div class="card skill">
+            <h3><span class="dot" aria-hidden="true"></span>Programming</h3>
+            <div class="chips">
+              <span class="chip">SQL</span><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">scikit-learn</span><span class="chip">XGBoost</span><span class="chip">matplotlib</span>
+            </div>
+          </div>
+          <div class="card skill">
+            <h3><span class="dot" aria-hidden="true"></span>Platforms</h3>
+            <div class="chips">
+              <span class="chip">Snowflake</span><span class="chip">dbt</span><span class="chip">Fivetran</span><span class="chip">Preset</span><span class="chip">Excel (financial modeling, scenario analysis, PivotTables)</span>
+            </div>
+          </div>
+          <div class="card skill">
+            <h3><span class="dot" aria-hidden="true"></span>Methods</h3>
+            <div class="chips">
+              <span class="chip">Classification (logistic regression, random forest, XGBoost)</span><span class="chip">Forecasting</span><span class="chip">Regression</span><span class="chip">Hypothesis testing</span><span class="chip">K-means clustering</span><span class="chip">PCA</span><span class="chip">EDA</span><span class="chip">Data visualization</span>
+            </div>
+          </div>
+          <div class="card skill wide">
+            <h3><span class="dot" aria-hidden="true"></span>Hobbies</h3>
+            <div class="chips">
+              <span class="chip">🏸 Badminton</span><span class="chip">🚗 Road Trips</span><span class="chip">🎮 Video Games</span><span class="chip">🍳 Cooking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>© <span id="year">2026</span> Pinge (Charles) Chen · <a href="mailto:pc3191@columbia.edu">pc3191@columbia.edu</a> · <a href="https://www.linkedin.com/in/pchen13" target="_blank" rel="noopener noreferrer">LinkedIn</a> · <a href="https://github.com/CharlesC13" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+      <a class="to-top" href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // Highlight the nav link for the section currently in view.
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+      var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+      function update() {
+        var y = window.scrollY + window.innerHeight * 0.3;
+        var current = -1;
+        sections.forEach(function (s, i) { if (s && s.offsetTop <= y) current = i; });
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = sections.length - 1;
+        links.forEach(function (a, i) {
+          var on = i === current;
+          a.classList.toggle('active', on);
+          if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>

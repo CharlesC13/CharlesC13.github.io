@@ -1,0 +1,8 @@
+# Never publish the private folder (resume PDF, personal files)
+private/
+
+# Local / OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.env
